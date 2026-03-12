@@ -5,170 +5,454 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DataLink | Home</title>
-    
+
     <link rel="stylesheet" href="./bootstrap-icons-1.10.5/font/bootstrap-icons.min.css" />
     <link rel="shortcut icon" href="./img/istockphoto-1783729778-612x612.jpg" type="image/x-icon">
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 
     <style>
-        #scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: #0d6efd;
-            z-index: 10000;
-            transition: width 0.1s linear;
+        *, *::before, *::after { box-sizing: border-box; }
+
+        :root {
+            --bg:       #0f1115;
+            --bg2:      #161a1f;
+            --bg3:      #1d2228;
+            --blue:     #3b82f6;
+            --blue2:    #1d4ed8;
+            --blue-glow: rgba(59, 130, 246, 0.15);
+            --text:     #f0f4ff;
+            --muted:    rgba(240, 244, 255, 0.45);
+            --border:   rgba(255, 255, 255, 0.07);
+            --card-bg:  rgba(255, 255, 255, 0.03);
+            --r:        16px;
         }
 
         html, body {
             height: auto !important;
             overflow-x: hidden;
-        }
-        
-        body {
-            background-color: #1a1d20;
-            color: white;
             scroll-behavior: smooth;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        .cover-container {
-            max-width: 65em;
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        header { z-index: 1000; position: relative; }
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue), #818cf8);
+            z-index: 10000;
+            transition: width 0.1s linear;
+        }
 
-        .user-profile-badge {
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 17, 21, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            padding: 6px 18px;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 17px;
+            letter-spacing: -0.3px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 30px; height: 30px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--blue), #6366f1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+        }
+
+        .nav-links { display: flex; align-items: center; gap: 6px; }
+
+        .nav-btn {
+            padding: 7px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all .2s;
+            font-family: inherit;
+        }
+
+        .nav-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid transparent;
+        }
+        .nav-ghost:hover { color: var(--text); background: var(--bg3); }
+
+        .nav-outline {
+            background: transparent;
+            color: var(--blue);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+        }
+        .nav-outline:hover { background: var(--blue-glow); }
+
+        .nav-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
             border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .hero-section {
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 40px 15px;
-        }
-
-        .parallax-divider {
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
-            height: 450px;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                              url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1920&q=80');
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .divider-content {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 3rem;
-            border-radius: 30px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-
-        .feature-section {
-            padding: 100px 0;
-            background: rgba(255, 255, 255, 0.01);
-        }
-
-        .feature-box {
-            padding: 40px 30px;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            height: 100%;
-        }
-
-        .feature-box:hover {
-            transform: translateY(-12px);
-            background: rgba(13, 110, 253, 0.08);
-            border-color: rgba(13, 110, 253, 0.5);
-            box-shadow: 0 0 20px rgba(13, 110, 253, 0.2), 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .step-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: rgba(13, 110, 253, 0.15);
-            line-height: 0.8;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        /* تنسيق التنبيهات الذكي */
-        .was-validated .form-control:invalid {
-            border: 2px solid #ff4d4d !important;
-            background-color: rgba(255, 77, 77, 0.05) !important;
-        }
-
-        .was-validated .form-control:valid {
-            border: 2px solid #2ecc71 !important;
-            background-color: rgba(46, 204, 113, 0.05) !important;
-        }
-
-        .invalid-feedback {
-            color: #ff4d4d;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .btn-lg { 
-            border-radius: 50px; 
-            padding: 0.9rem 2.2rem; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        
-        .btn-light:hover { 
-            transform: scale(1.05); 
-            letter-spacing: 0.5px;
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1) !important;
+            font-size: 13px;
         }
 
         .logout-link {
             color: #ff6b6b !important;
             border: 1px solid rgba(255, 107, 107, 0.3) !important;
-            border-radius: 12px;
-            padding: 6px 16px !important;
-            transition: 0.3s;
+            border-radius: 10px;
+            padding: 7px 16px !important;
+            transition: 0.2s;
+            font-size: 13px;
         }
-        
-        .logout-link:hover {
-            background: rgba(255, 107, 107, 0.1);
-            border-color: #ff6b6b !important;
+        .logout-link:hover { background: rgba(255, 107, 107, 0.08); border-color: #ff6b6b !important; }
+
+        .hero-section {
+            min-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 24px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .footer-social-link {
-            transition: 0.3s;
-            color: rgba(255,255,255,0.5);
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -150px; left: 50%;
+            transform: translateX(-50%);
+            width: 700px; height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+            pointer-events: none;
         }
-        .footer-social-link:hover {
-            color: #0d6efd !important;
-            transform: scale(1.2);
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            max-width: 780px;
+        }
+
+        .hero-title .accent {
+            background: linear-gradient(90deg, var(--blue), #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+        .btn-primary-hero {
+            padding: 13px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--blue), #4f46e5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all .25s;
+            letter-spacing: -.2px;
+            display: inline-block;
+        }
+        .btn-primary-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            color: white;
+        }
+
+        .btn-secondary-hero {
+            padding: 13px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all .25s;
+            display: inline-block;
+        }
+        .btn-secondary-hero:hover {
+            background: var(--bg3);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: var(--text);
+        }
+
+        .divider-section {
+            padding: 80px 24px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .divider-section::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .divider-section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
+        }
+
+        .divider-section p {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-section {
+            padding: 80px 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-eyebrow {
+            font-size: 11px;
+            color: var(--blue);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 8px;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: .95rem;
+            margin-bottom: 48px;
+        }
+
+        .feature-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 28px 24px;
+            transition: all .35s cubic-bezier(.165, .84, .44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: var(--r);
+            background: linear-gradient(135deg, var(--blue-glow), transparent);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .feature-card:hover::before { opacity: 1; }
+
+        .card-icon {
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+        }
+        .card-icon.blue   { background: rgba(59, 130, 246, 0.15);  border: 1px solid rgba(59, 130, 246, 0.25); }
+        .card-icon.purple { background: rgba(99, 102, 241, 0.15);  border: 1px solid rgba(99, 102, 241, 0.25); }
+        .card-icon.teal   { background: rgba(20, 184, 166, 0.15);  border: 1px solid rgba(20, 184, 166, 0.25); }
+
+        .card-step {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .feature-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -.3px; }
+        .feature-card p  { color: var(--muted); font-size: .85rem; line-height: 1.65; margin: 0; }
+
+        .feedback-section {
+            padding: 60px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .feedback-box {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .feedback-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -.5px;
+            margin-bottom: 10px;
+        }
+
+        .feedback-sub {
+            color: var(--muted);
+            font-size: .9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .was-validated .form-control:invalid {
+            border: 1px solid rgba(255, 77, 77, 0.6) !important;
+            background: rgba(255, 77, 77, 0.05) !important;
+        }
+        .was-validated .form-control:valid {
+            border: 1px solid rgba(46, 204, 113, 0.5) !important;
+            background: rgba(46, 204, 113, 0.04) !important;
+        }
+        .invalid-feedback { color: #ff6b6b; font-size: .8rem; font-weight: 500; margin-top: 4px; }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text) !important;
+            border-radius: 10px !important;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px !important;
+            transition: border-color .2s, background .2s;
+        }
+        .form-control:focus {
+            border-color: var(--blue) !important;
+            background: rgba(59, 130, 246, 0.05) !important;
+            box-shadow: none !important;
+            color: var(--text) !important;
+        }
+        .form-control::placeholder { color: var(--muted) !important; }
+
+        .btn-send {
+            width: 100%;
+            padding: 13px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--blue), #4f46e5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all .25s;
+            letter-spacing: .2px;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-send:hover { opacity: .9; transform: translateY(-1px); }
+
+        .footer-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .footer-meta { color: var(--muted); font-size: 12px; }
+
+        .footer-icons { display: flex; gap: 10px; }
+
+        .footer-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--muted);
+            font-size: 15px;
+            transition: all .2s;
+            text-decoration: none;
+        }
+        .footer-icon:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+            background: var(--blue-glow);
+        }
+
+        @media (max-width: 680px) {
+            .feature-cards { grid-template-columns: 1fr; }
+            .feedback-box  { grid-template-columns: 1fr; padding: 28px; }
+            .stats-bar     { flex-wrap: wrap; }
+            .stat-item     { min-width: 50%; border-bottom: 1px solid var(--border); }
         }
     </style>
 </head>
@@ -176,160 +460,142 @@
 <body>
     <div id="scroll-progress"></div>
 
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        
-        <header class="mb-auto p-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h3 class="fw-bold mb-0"><i class="bi bi-cpu-fill text-primary me-2"></i>DataLink</h3>
-                <nav class="nav nav-masthead justify-content-center align-items-center">
-                    <% if (user) { %>
-                        <div class="user-profile-badge">
-                            <i class="bi bi-person-circle text-primary me-2"></i>
-                            <span class="small">Welcome, <strong class="text-white"><%= user.username %></strong></span>
-                        </div>
-                        <a href="/logout" class="nav-link fw-bold logout-link ms-3">Log out</a>
-                    <% } else { %>
-                        <a href="/signup" class="nav-link fw-bold py-1 px-3 text-white opacity-75">Sign up</a>
-                        <a href="/login" class="nav-link fw-bold py-1 px-3 text-white">Log in</a>
-                    <% } %>
-                </nav>
-            </div>
-        </header>
-
-        <main class="hero-section">
-            <h1 class="display-2 fw-bold mb-4">
+    <header>
+        <div class="nav-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon"><i class="bi bi-cpu-fill"></i></div>
+                DataLink
+            </a>
+            <nav class="nav-links">
                 <% if (user) { %>
-                    Elevate your Workflow, <span class="text-primary text-capitalize"><%= user.username %></span>
+                    <div class="nav-badge">
+                        <i class="bi bi-person-circle text-primary"></i>
+                        <span>Welcome, <strong><%= user.username %></strong></span>
+                    </div>
+                    <a href="/logout" class="nav-btn logout-link ms-2">Log out</a>
                 <% } else { %>
-                    Welcome to <span class="text-primary">DataLink</span>
+                    <a href="/signup" class="nav-btn nav-ghost">Sign up</a>
+                    <a href="/login"  class="nav-btn nav-outline">Log in</a>
                 <% } %>
-            </h1>
-            <p class="lead text-white-50 mb-5" style="max-width: 750px; font-size: 1.25rem;">
-                The ultimate solution for smart data management. Organize, analyze, and secure your database records with our next-gen interface.
-            </p>
-            <div class="d-flex gap-3">
-                <a href="/home" class="btn btn-lg btn-light shadow-lg fw-bold">Get Started</a>
-                <a href="/content" class="btn btn-lg btn-outline-light fw-bold">View Content</a>
-            </div>
-            <div class="mt-5">
-                <a href="#features" class="text-white opacity-25"><i class="bi bi-chevron-double-down fs-3"></i></a>
-            </div>
-        </main>
-    </div>
+            </nav>
+        </div>
+    </header>
 
-    <section class="parallax-divider">
-        <div class="divider-content text-center mx-3" style="max-width: 700px;">
-            <h2 class="display-6 fw-bold text-white mb-3">High-Performance Infrastructure</h2>
-            <p class="lead text-white-50 mb-0">Our system is engineered for scale, handling millions of records with millisecond response times.</p>
+    <section class="hero-section">
+        <h1 class="hero-title">
+            <% if (user) { %>
+                Hello, <span class="accent text-capitalize"><%= user.username %></span>
+            <% } else { %>
+                Welcome to <span class="accent">DataLink</span>
+            <% } %>
+        </h1>
+
+        <p class="hero-sub">
+            A simple tool to manage and store your data. Add records, view them, and keep everything organized in one place.
+        </p>
+
+        <div class="hero-btns">
+            <a href="/home"    class="btn-primary-hero">Get Started</a>
+            <a href="/content" class="btn-secondary-hero">View Content</a>
         </div>
     </section>
 
-    <div class="cover-container mx-auto">
-        <section id="features" class="feature-section text-start">
-            <div class="container">
-                <div class="row mb-5 text-center">
-                    <div class="col">
-                        <h2 class="display-5 fw-bold mb-3">How <span class="text-primary">DataLink</span> Works</h2>
-                        <p class="text-white-50">Three simple steps to professional data control</p>
-                    </div>
-                </div>
-                
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="feature-box">
-                            <span class="step-number">01</span>
-                            <h4 class="fw-bold">Create Account</h4>
-                            <p class="text-white-50 small mb-0">Securely register and set up your private workspace in seconds with encrypted authentication.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="feature-box">
-                            <span class="step-number">02</span>
-                            <h4 class="fw-bold">Input Data</h4>
-                            <p class="text-white-50 small mb-0">Add your records through our intuitive dashboard with real-time validation and smart suggestions.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="feature-box">
-                            <span class="step-number">03</span>
-                            <h4 class="fw-bold">Analyze & Export</h4>
-                            <p class="text-white-50 small mb-0">View deep insights and manage entries with advanced filtering, reporting, and one-click export.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section class="divider-section">
+        <h2>Built for simplicity</h2>
+        <p>A straightforward database interface — no fluff, just your data.</p>
+    </section>
 
-        <section id="feedback" class="py-5">
-            <div class="container">
-                <div class="feature-box p-5" style="background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);">
-                    <div class="row align-items-center">
-                        <div class="col-lg-5 mb-4 mb-lg-0">
-                            <h2 class="fw-bold mb-3">User <span class="text-primary">Feedback</span></h2>
-                            <p class="text-white-50">Your insights drive our innovation. Tell us what you think.</p>
-                        </div>
-                        <div class="col-lg-7">
-                            <form action="/send-feedback" method="POST" class="needs-validation" novalidate>
-                                <div class="mb-3">
-                                    <input type="text" name="subject" class="form-control form-control-lg border-0" placeholder="Subject" style="background: rgba(255,255,255,0.07); color: white; border-radius: 12px;" required>
-                                    <div class="invalid-feedback">Please provide a subject.</div>
-                                </div>
-                                <div class="mb-3">
-                                    <textarea name="message" class="form-control form-control-lg border-0" rows="3" placeholder="Your Message" style="background: rgba(255,255,255,0.07); color: white; border-radius: 12px;" required></textarea>
-                                    <div class="invalid-feedback">Please enter your message.</div>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 fw-bold py-3 shadow-sm" style="border-radius: 12px;">
-                                    Send Message <i class="bi bi-send-fill ms-2"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section id="features" class="features-section">
+        <h2 class="section-title">How it works</h2>
+        <p class="section-sub">Three steps to get started</p>
 
-        <footer class="py-5 mt-4 text-center text-white-50">
-            <div class="container">
-                <hr class="mb-5" style="opacity: 0.05;">
-                <div class="row align-items-center">
-                    <div class="col-md-4 text-md-start">
-                        <h5 class="fw-bold text-white mb-0"><i class="bi bi-cpu-fill text-primary me-2"></i>DataLink</h5>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="small mb-0">Developed by <span class="text-white fw-bold">Abdulrahman Mohammed</span></p>
-                    </div>
-                    <div class="col-md-4 text-md-end">
-                        <a href="#" class="footer-social-link mx-2 fs-5"><i class="bi bi-github"></i></a>
-                        <a href="#" class="footer-social-link mx-2 fs-5"><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
+        <div class="feature-cards">
+            <div class="feature-card">
+                <div class="card-icon blue"><i class="bi bi-person-plus-fill"></i></div>
+                <div class="card-step">Step 01</div>
+                <h4>Create an Account</h4>
+                <p>Sign up to get access to your own workspace.</p>
             </div>
-        </footer>
-    </div>
+            <div class="feature-card">
+                <div class="card-icon purple"><i class="bi bi-database-fill-add"></i></div>
+                <div class="card-step">Step 02</div>
+                <h4>Add Your Data</h4>
+                <p>Enter your records through a simple and clean form.</p>
+            </div>
+            <div class="feature-card">
+                <div class="card-icon teal"><i class="bi bi-table"></i></div>
+                <div class="card-step">Step 03</div>
+                <h4>View &amp; Manage</h4>
+                <p>Browse, filter, and manage all your entries from one page.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="feedback" class="feedback-section">
+        <div class="feedback-box">
+            <div>
+                <h2 class="feedback-title">Send <span style="color:var(--blue)">Feedback</span></h2>
+                <p class="feedback-sub">Got a suggestion or found a bug? Let me know.</p>
+            </div>
+            <div>
+                <form action="/send-feedback" method="POST" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <input type="text" name="subject"
+                               class="form-control form-control-lg"
+                               placeholder="Subject" required>
+                        <div class="invalid-feedback">Please provide a subject.</div>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="message"
+                                  class="form-control form-control-lg"
+                                  rows="4"
+                                  placeholder="Your message..."
+                                  required></textarea>
+                        <div class="invalid-feedback">Please enter your message.</div>
+                    </div>
+                    <button type="submit" class="btn-send">
+                        Send Message <i class="bi bi-send-fill ms-1"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="logo-icon" style="width:24px;height:24px;font-size:11px;"><i class="bi bi-cpu-fill"></i></div>
+                DataLink
+            </div>
+            <p class="footer-meta mb-0">Developed by <strong style="color:var(--text)">Abdulrahman Mohammed</strong></p>
+            <div class="footer-icons">
+                <a href="https://github.com/Abdulrahman2127" class="footer-icon"><i class="bi bi-github"></i></a>
+                <a href="#" class="footer-icon"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
 
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script>
-        // نظام شريط التقدم والتحقق
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        
+        window.onscroll = function () {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById('scroll-progress').style.width = (winScroll / height * 100) + '%';
         };
 
         (() => {
-          'use strict'
-          const forms = document.querySelectorAll('.needs-validation')
-          Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-              if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-              }
-              form.classList.add('was-validated')
-            }, false)
-          })
-        })()
+            'use strict';
+            document.querySelectorAll('.needs-validation').forEach(form => {
+                form.addEventListener('submit', e => {
+                    if (!form.checkValidity()) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
     </script>
 </body>
 </html>

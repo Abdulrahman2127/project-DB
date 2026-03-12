@@ -25,6 +25,7 @@ const postSignup = [
             const newAccount = new Account({ 
                 username, 
                 email, 
+                password  
             });
             
             await newAccount.save();
@@ -41,27 +42,35 @@ const postLogin = async (req, res) => {
         const { email, password } = req.body;
 
         const user = await Account.findOne({ 
-            email: { $regex: new RegExp(`^${email}$`, 'i') } 
+            email: { $regex: new RegExp(`^${email.trim()}$`, 'i') } 
         });
 
-        console.log("Password from Form:", password);
-        console.log("Password from DB:", user ? user.password : "User not found");
+        if (!user) {
+            console.log("Login Attempt: User not found");
+            return res.render("auth/login", { error: "Invalid email or password", err: null });
+        }
 
-        if (user) {
-            const isMatch = await bcrypt.compare(password, user.password);
-            console.log("Is Match:", isMatch); 
+        const isMatch = await bcrypt.compare(password, user.password);
+        
+        console.log("Is Password Match:", isMatch); 
 
-            if (isMatch) {
-                const token = jwt.sign({ id: user._id }, process.env.password_jwt);
-                res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
-                return res.redirect("/home");
-            }
+        if (isMatch) {
+            const token = jwt.sign({ id: user._id }, process.env.password_jwt, { expiresIn: '24h' });
+            
+            res.cookie("jwt", token, { 
+                httpOnly: true, 
+                maxAge: 86400000, 
+                secure: process.env.NODE_ENV === 'production'     
+            });
+
+            return res.redirect("/home");
         }
 
         res.render("auth/login", { error: "Invalid email or password", err: null });
+
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Login Error");
+        console.error("Login Error:", err);
+        res.status(500).send("Internal Server Error during login");
     }
 };
 const logout = (req, res) => {
@@ -69,12 +78,12 @@ const logout = (req, res) => {
     res.redirect("/welcome");
 };
 
-module.exports = { 
-    welcome, 
-    content, 
-    getLogin, 
-    getSignup, 
-    postSignup, 
-    postLogin, 
-    logout 
+module.exports = {
+    welcome,
+    content,
+    getLogin,
+    getSignup,
+    postSignup,
+    postLogin,
+    logout
 };

@@ -16,14 +16,12 @@ app.use(cookieParser());
 
 app.set("view engine", "ejs");
 
-// Routes
 const authRoutes = require("./routes/authRoutes");
 const customerRoutes = require("./routes/customerRoutes");
 
 app.use(authRoutes);
 app.use(customerRoutes);
 
-// الاتصال بقاعدة البيانات وتفعيل السيرفر
 const dbURI = process.env.MONGODB_URL;
 
 mongoose.connect(dbURI)
@@ -36,3 +34,5 @@ mongoose.connect(dbURI)
   .catch(err => {
     console.log("DB connection error:", err);
   });
+
+app.listen(port, () => console.log(`Server running at http://localhost:${port}/welcome`));

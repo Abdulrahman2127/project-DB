@@ -32,12 +32,10 @@ const postFeedback = async (req, res) => {
     }
 };
 
-// عرض صفحة إضافة عميل جديد
 const getAddUser = (req, res) => {
     res.render("user/add", { user: res.locals.user });
 };
 
-// معالجة إضافة عميل جديد
 const postAddUser = async (req, res) => {
     try {
         const newUser = new User(req.body);
@@ -48,7 +46,6 @@ const postAddUser = async (req, res) => {
     }
 };
 
-// عرض بيانات عميل محدد
 const getViewUser = async (req, res) => {
     try {
         const customer = await User.findById(req.params.id);
@@ -63,7 +60,6 @@ const getViewUser = async (req, res) => {
     }
 };
 
-// عرض صفحة تعديل بيانات عميل
 const getEditUser = async (req, res) => {
     try {
         const customer = await User.findById(req.params.id);
@@ -78,7 +74,6 @@ const getEditUser = async (req, res) => {
     }
 };
 
-// معالجة تحديث بيانات العميل
 const putEditUser = async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -88,7 +83,6 @@ const putEditUser = async (req, res) => {
     }
 };
 
-// حذف عميل
 const deleteUser = async (req, res) => {
     try {
         await User.findByIdAndDelete(req.params.id);
@@ -98,7 +92,6 @@ const deleteUser = async (req, res) => {
     }
 };
 
-// البحث عن العملاء
 const postSearch = async (req, res) => {
     try {
         const userResult = await User.find({
